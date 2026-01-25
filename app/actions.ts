@@ -1,0 +1,106 @@
+"use server";
+
+export type WeatherError = {
+  code: "GEOCODING_FAILED" | "FORECAST_FAILED" | "UNKNOWN_ERROR";
+  message: string;
+  details?: unknown;
+};
+export type WeatherResponse =
+  | {
+      success: true;
+      data: {
+        current: unknown;
+        hourly: unknown;
+        daily: unknown;
+      };
+    }
+  | {
+      success: false;
+      error: WeatherError;
+    };
+
+export async function searchWeather(city: string): Promise<WeatherResponse> {
+  try {
+    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en`;
+    const geoRes = await fetch(geoUrl);
+
+    if (!geoRes.ok) {
+      return {
+        success: false,
+        error: {
+          code: "GEOCODING_FAILED",
+          message: `City ${city} not found.`,
+        },
+      };
+    }
+
+    const geoData = await geoRes.json();
+    if (!geoData.results || geoData.results.length === 0) {
+      return {
+        success: false,
+        error: {
+          code: "GEOCODING_FAILED",
+          message: `City ${city} not found`,
+        },
+      };
+    }
+
+    const { latitude, longitude, timezone } = geoData.results[0];
+    const forecastUrl =
+      `https://api.open-meteo.com/v1/forecast?` +
+      new URLSearchParams({
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
+
+        current:
+          "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,weather_code",
+
+        hourly: "temperature_2m,weather_code",
+        daily:
+          "weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min",
+
+        timezone,
+        forecast_days: "7",
+        temperature_unit: "celsius",
+        wind_speed_unit: "kmh",
+        precipitation_unit: "mm",
+      }).toString();
+
+    const forecastRes = await fetch(forecastUrl);
+
+    if (!forecastRes.ok) {
+      return {
+        success: false,
+        error: {
+          code: "FORECAST_FAILED",
+          message: "Weather App temporarily unavailable",
+        },
+      };
+    }
+
+    const forecastData = await forecastRes.json();
+
+    return {
+      success: true,
+      data: {
+        current: {
+          ...forecastData.current,
+          city: geoData.results[0].name,
+          country: geoData.results[0].country,
+        },
+        hourly: forecastData.hourly,
+        daily: forecastData.daily,
+      },
+    };
+  } catch (error) {
+    console.error("Unknown error:", error);
+    return {
+      success: false,
+      error: {
+        code: "UNKNOWN_ERROR",
+        message: error instanceof Error ? error.message : "Unknown error",
+        details: error,
+      },
+    };
+  }
+}

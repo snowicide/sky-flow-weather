@@ -1,20 +1,22 @@
-export default function WeatherDetails() {
+import { WeatherCurrent } from "@/types/WeatherCurrent";
+
+export default function WeatherDetails({ data }: WeatherCurrent) {
   const weatherDetails = [
     {
       title: "Feels Like",
-      value: "18°",
+      value: `${data.apparent_temperature}°`,
     },
     {
       title: "Humidity",
-      value: "46%",
+      value: `${data.relative_humidity_2m}%`,
     },
     {
       title: "Wind",
-      value: "14 km/h",
+      value: `${data.wind_speed_10m} km/h`,
     },
     {
       title: "Pricipitation",
-      value: "0 mm",
+      value: `${data.precipitation} mm`,
     },
   ];
 
