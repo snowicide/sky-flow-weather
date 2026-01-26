@@ -15,6 +15,11 @@ import { useWeatherStore } from "@/store/useWeatherStore";
 export default function HourlyForecast() {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   const { weatherData } = useWeatherStore();
+
+  if (!weatherData?.hourly) {
+    return <div>123</div>;
+  }
+
   const data = weatherData.hourly;
 
   const groupByDay = (): DailyForecast[] => {
@@ -38,9 +43,6 @@ export default function HourlyForecast() {
       }
 
       const code = getWeatherCode(data.weather_code[index]);
-      console.log(
-        `Время: ${dateKey} ${date.getHours()}:00, Код: ${data.weather_code[index]}, Иконка: ${code}`,
-      );
       const hourItem: HourlyItem = {
         hour: formatHourOfDay(date),
         temp: data.temperature_2m[index],

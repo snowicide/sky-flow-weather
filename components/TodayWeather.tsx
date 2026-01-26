@@ -4,7 +4,6 @@ import bgTodayMobile from "@/public/images/bg-today-small.svg";
 import bgTodayDesktop from "@/public/images/bg-today-large.svg";
 import dayjs from "dayjs";
 
-import sunnyIcon from "@/public/icons/icon-sunny.webp";
 import { useWeatherStore } from "@/store/useWeatherStore";
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";

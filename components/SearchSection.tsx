@@ -3,7 +3,7 @@ import Image from "next/image";
 import searchIcon from "@/public/icons/icon-search.svg";
 import { searchWeather, type WeatherResponse } from "@/app/actions";
 import { useWeatherStore } from "@/store/useWeatherStore";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 
 export default function SearchSection() {
   const [localSearch, setLocalSearch] = useState<string>("");
@@ -12,6 +12,7 @@ export default function SearchSection() {
 
   const handleSearchButton = async () => {
     if (!localSearch.trim()) return;
+    console.log(weatherData);
     setLoading(true);
     setError(null);
     const city = localSearch
@@ -37,7 +38,7 @@ export default function SearchSection() {
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSearchButton();
   };
 

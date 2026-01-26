@@ -1,4 +1,9 @@
 "use server";
+import {
+  WeatherDataCurrent,
+  WeatherDataHourly,
+  WeatherDataDaily,
+} from "@/types/WeatherData";
 
 export type WeatherError = {
   code: "GEOCODING_FAILED" | "FORECAST_FAILED" | "UNKNOWN_ERROR";
@@ -9,9 +14,9 @@ export type WeatherResponse =
   | {
       success: true;
       data: {
-        current: unknown;
-        hourly: unknown;
-        daily: unknown;
+        current: WeatherDataCurrent;
+        hourly: WeatherDataHourly;
+        daily: WeatherDataDaily;
       };
     }
   | {
@@ -87,9 +92,9 @@ export async function searchWeather(city: string): Promise<WeatherResponse> {
           ...forecastData.current,
           city: geoData.results[0].name,
           country: geoData.results[0].country,
-        },
-        hourly: forecastData.hourly,
-        daily: forecastData.daily,
+        } as WeatherDataCurrent,
+        hourly: forecastData.hourly as WeatherDataHourly,
+        daily: forecastData.daily as WeatherDataDaily,
       },
     };
   } catch (error) {

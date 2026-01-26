@@ -1,13 +1,14 @@
 import { create } from "zustand";
+import { WeatherData } from "@/types/WeatherData";
 
 interface WeatherState {
   isLoading: boolean;
   error: string | null;
-  weatherData: object | null;
+  weatherData: WeatherData | null;
   searchText: string;
   lastCity: string;
 
-  setWeatherData: (data: object, city?: string) => void;
+  setWeatherData: (data: WeatherData, city?: string) => void;
   setSearchText: (value: string) => void;
   setLoading: (value: boolean) => void;
   setError: (value: string | null) => void;
