@@ -50,7 +50,6 @@ export default function HourlyForecast() {
         weatherCode: data.weather_code[index],
         image: getIconByWeatherCode[code],
       };
-      console.log(hourItem);
 
       days[currentDayIndex].hours.push(hourItem);
     });
