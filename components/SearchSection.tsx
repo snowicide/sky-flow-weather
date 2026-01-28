@@ -7,10 +7,16 @@ import { useState, KeyboardEvent } from "react";
 
 export default function SearchSection() {
   const [localSearch, setLocalSearch] = useState<string>("");
+  const [isWrongSearch, setIsWrongSearch] = useState<boolean>(false);
   const { setLoading, setError, setWeatherData, isLoading } = useWeatherStore();
 
   const handleSearchButton = async () => {
-    if (!localSearch.trim()) return;
+    if (!localSearch.trim()) {
+      setLocalSearch("");
+      setIsWrongSearch(true);
+      return;
+    }
+    setIsWrongSearch(false);
     setLoading(true);
     setError(null);
     const city = localSearch
@@ -51,7 +57,9 @@ export default function SearchSection() {
       </h1>
 
       <div className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
-        <div className="flex items-center flex-1 group bg-[hsl(243,27%,20%)] hover:bg-[hsl(243,27%,20%)]/80 focus-within:bg-[hsl(243,27%,20%)]/80 focus-within:ring-2 focus-within:ring-[hsl(233,67%,56%)] transition duration-75 rounded-xl px-4 py-3">
+        <div
+          className={`flex items-center flex-1 group bg-[hsl(243,27%,20%)] hover:bg-[hsl(243,27%,20%)]/80 focus-within:bg-[hsl(243,27%,20%)]/80 focus-within:ring-2 focus-within:ring-[hsl(233,67%,56%)] transition duration-75 rounded-xl px-4 py-3 ${isWrongSearch ? "ring-1 ring-red-500/80" : ""}`}
+        >
           <Image
             src={searchIcon}
             className="w-5 h-5 mr-3 group-hover:opacity-75 group-focus-within:opacity-75"
@@ -59,7 +67,10 @@ export default function SearchSection() {
           />
           <input
             className="flex-1 bg-transparent placeholder-white/70 text-base sm:text-lg outline-none"
-            onChange={(e) => setLocalSearch(e.target.value)}
+            onChange={(e) => {
+              setLocalSearch(e.target.value);
+              if (isWrongSearch) setIsWrongSearch(false);
+            }}
             onKeyDown={handleKeyDown}
             value={localSearch}
             disabled={isLoading}
