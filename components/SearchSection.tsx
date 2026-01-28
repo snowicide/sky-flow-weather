@@ -38,6 +38,10 @@ export default function SearchSection() {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleSearchButton();
+    if (e.key === "Escape") {
+      e.currentTarget.blur();
+      setLocalSearch("");
+    }
   };
 
   return (
@@ -47,8 +51,12 @@ export default function SearchSection() {
       </h1>
 
       <div className="flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto">
-        <div className="flex items-center flex-1 bg-[hsl(243,27%,20%)] rounded-xl px-4 py-3">
-          <Image src={searchIcon} className="w-5 h-5 mr-3" alt="Search" />
+        <div className="flex items-center flex-1 group bg-[hsl(243,27%,20%)] hover:bg-[hsl(243,27%,20%)]/80 focus-within:bg-[hsl(243,27%,20%)]/80 focus-within:ring-2 focus-within:ring-[hsl(233,67%,56%)] transition duration-75 rounded-xl px-4 py-3">
+          <Image
+            src={searchIcon}
+            className="w-5 h-5 mr-3 group-hover:opacity-75 group-focus-within:opacity-75"
+            alt="Search"
+          />
           <input
             className="flex-1 bg-transparent placeholder-white/70 text-base sm:text-lg outline-none"
             onChange={(e) => setLocalSearch(e.target.value)}

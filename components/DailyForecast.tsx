@@ -46,7 +46,7 @@ export default function DailyForecast() {
         {DailyForecast.map(({ day, image, temp, feelsLike }) => (
           <div
             key={day}
-            className="bg-[hsl(243,27%,20%)] p-4 rounded-xl border border-white/10 flex flex-col items-center"
+            className="bg-[hsl(243,27%,20%)] hover:opacity-75 transition duration-75 p-4 rounded-xl border border-white/10 flex flex-col items-center"
           >
             <p className="font-medium mb-3 lg:text-sm">{day}</p>
             <div className="relative w-12 h-12 mb-3">

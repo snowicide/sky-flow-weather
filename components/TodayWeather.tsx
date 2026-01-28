@@ -56,7 +56,7 @@ export default function TodayWeather() {
               <span>{data.city}, </span>
               <span>{data.country}</span>
             </h2>
-            <p className="text-white/70 text-lg sm:text-xl">
+            <p className="text-white/70 text-lg">
               {dayjs().format("dddd, MMM D, YYYY")}
             </p>
           </div>

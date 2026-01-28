@@ -36,7 +36,7 @@ export default function WeatherDetails() {
         {weatherDetails.map(({ title, value }) => (
           <div
             key={title}
-            className="bg-[hsl(243,27%,20%)] p-4 sm:p-5 rounded-xl border border-white/10"
+            className="bg-[hsl(243,27%,20%)] hover:opacity-75 transition duration-75 p-4 sm:p-5 rounded-xl border border-white/10"
           >
             <p className="text-white/70 text-sm sm:text mb-2">{title}</p>
             <p className="text-2xl sm:text-2xl font-semibold">{value}</p>
