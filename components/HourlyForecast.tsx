@@ -1,73 +1,23 @@
 "use client";
-import {
-  formatDayOfWeek,
-  formatHourOfDay,
-  getHourNumber,
-} from "@/utils/formatDay";
-import type { DailyForecast, HourlyItem } from "@/types/WeatherHourly";
 import Image from "next/image";
-import dropdownIcon from "@/public/icons/icon-dropdown.svg";
-import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import { useState } from "react";
-import { getWeatherCode } from "@/utils/weatherCodes";
+import { useMemo, useState } from "react";
 import { useWeatherStore } from "@/store/useWeatherStore";
 import HourlyForecastSkeleton from "./skeletons/HourlyForecast.skeleton";
+import ChangeSelectedDay from "./ui/ChangeSelectedDay";
+import groupByDay from "@/utils/groupByDay";
 
 export default function HourlyForecast() {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   const { weatherData, isLoading } = useWeatherStore();
 
+  const days = useMemo(() => {
+    return groupByDay(weatherData?.hourly).slice(1);
+  }, [weatherData?.hourly]);
+
   if (!weatherData?.hourly || isLoading) {
     return <HourlyForecastSkeleton />;
   }
 
-  const data = weatherData.hourly;
-
-  const groupByDay = (): DailyForecast[] => {
-    const days: DailyForecast[] = [];
-    if (!data?.time?.length) return days;
-    let currentDay = "";
-    let currentDayIndex = -1;
-
-    data.time.forEach((timeStr, index) => {
-      const date = new Date(timeStr);
-      const dateKey = date.toISOString().split("T")[0];
-      if (dateKey !== currentDay) {
-        currentDay = dateKey;
-        currentDayIndex++;
-
-        days.push({
-          date: dateKey,
-          dayName: formatDayOfWeek(date),
-          hours: [],
-        });
-      }
-
-      const code = getWeatherCode(data.weather_code[index]);
-      const hourItem: HourlyItem = {
-        hour: formatHourOfDay(date),
-        temp: data.temperature_2m[index],
-        weatherCode: data.weather_code[index],
-        image: getIconByWeatherCode[code],
-      };
-
-      days[currentDayIndex].hours.push(hourItem);
-    });
-
-    days.forEach((day) => {
-      day.hours.sort((a, b) => {
-        let hourA = getHourNumber(a.hour);
-        let hourB = getHourNumber(b.hour);
-        if (!hourA) hourA = 0;
-        if (!hourB) hourB = 0;
-        return hourA - hourB;
-      });
-    });
-
-    return days;
-  };
-
-  const days = groupByDay().slice(1);
   const selectedDay = days[selectedDayIndex] || {
     date: "",
     dayName: "",
@@ -80,17 +30,17 @@ export default function HourlyForecast() {
       <div className="bg-[hsl(243,27%,20%)] max-h-full p-5 sm:p-6 rounded-2xl border border-white/10 sticky top-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">Hourly forecast</h3>
-          <button className="flex items-center justify-center gap-2 bg-[hsl(243,23%,30%)] px-5 py-2 rounded-lg border border-white/10 hover:opacity-70 transition-opacity">
-            <span>{selectedDay.dayName}</span>
-            <Image src={dropdownIcon} alt="Dropdown" className="w-4 h-4" />
-          </button>
+          <ChangeSelectedDay
+            days={days}
+            setSelectedDayIndex={setSelectedDayIndex}
+          />
         </div>
 
         <div className="space-y-2.5 overflow-auto max-h-136 scrollbar-hide">
           {hours.map(({ hour, image, temp }, index) => (
             <div
               key={`${hour}-${index}`}
-              className="flex items-center justify-between bg-[hsl(243,23%,24%)] hover:opacity-75 transition duration-75 p-3 rounded-lg border border-white/10"
+              className="flex items-center justify-between bg-[hsl(243,23%,24%)] hover:opacity-75 p-3 rounded-lg border border-white/10"
             >
               <div className="flex items-center gap-3">
                 <div className="relative w-8 h-8">
