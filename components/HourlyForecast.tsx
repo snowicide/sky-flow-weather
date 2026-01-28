@@ -76,11 +76,11 @@ export default function HourlyForecast() {
   const hours = selectedDay.hours;
 
   return (
-    <div className="lg:w-96 w-full md:max-w-full">
-      <div className="bg-[hsl(243,27%,20%)] p-5 sm:p-6 rounded-2xl border border-white/10 sticky top-6">
+    <div className="lg:w-96 w-full max-h-full md:max-w-full">
+      <div className="bg-[hsl(243,27%,20%)] max-h-full p-5 sm:p-6 rounded-2xl border border-white/10 sticky top-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">Hourly forecast</h3>
-          <button className="flex items-center gap-2 bg-[hsl(243,23%,30%)] px-4 py-2 rounded-lg border border-white/10 hover:opacity-70 transition-opacity">
+          <button className="flex items-center justify-center gap-2 bg-[hsl(243,23%,30%)] px-5 py-2 rounded-lg border border-white/10 hover:opacity-70 transition-opacity">
             <span>{selectedDay.dayName}</span>
             <Image src={dropdownIcon} alt="Dropdown" className="w-4 h-4" />
           </button>
