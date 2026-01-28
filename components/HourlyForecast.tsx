@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useWeatherStore } from "@/store/useWeatherStore";
 import HourlyForecastSkeleton from "./skeletons/HourlyForecast.skeleton";
 import ChangeSelectedDay from "./ui/ChangeSelectedDay";
@@ -9,6 +9,7 @@ import groupByDay from "@/utils/groupByDay";
 export default function HourlyForecast() {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   const { weatherData, isLoading } = useWeatherStore();
+  const hoursRef = useRef<HTMLDivElement>(null);
 
   const days = useMemo(() => {
     return groupByDay(weatherData?.hourly).slice(1);
@@ -25,6 +26,11 @@ export default function HourlyForecast() {
   };
   const hours = selectedDay.hours;
 
+  const handleChangeDay = (index: number) => {
+    setSelectedDayIndex(index);
+    hoursRef.current?.scrollTo({ top: 0 });
+  };
+
   return (
     <div className="lg:w-96 w-full max-h-full md:max-w-full">
       <div className="bg-[hsl(243,27%,20%)] max-h-full p-5 sm:p-6 rounded-2xl border border-white/10 sticky top-6">
@@ -32,11 +38,14 @@ export default function HourlyForecast() {
           <h3 className="text-xl font-bold">Hourly forecast</h3>
           <ChangeSelectedDay
             days={days}
-            setSelectedDayIndex={setSelectedDayIndex}
+            setSelectedDayIndex={handleChangeDay}
           />
         </div>
 
-        <div className="space-y-2.5 overflow-auto max-h-136 scrollbar-hide">
+        <div
+          className="space-y-2.5 overflow-auto max-h-136 scrollbar-hide"
+          ref={hoursRef}
+        >
           {hours.map(({ hour, image, temp }, index) => (
             <div
               key={`${hour}-${index}`}
