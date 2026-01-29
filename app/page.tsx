@@ -4,27 +4,42 @@ import TodayWeather from "@/components/TodayWeather";
 import WeatherDetails from "@/components/WeatherDetails";
 import DailyForecast from "@/components/DailyForecast";
 import HourlyForecast from "@/components/HourlyForecast";
-import { searchWeather } from "./actions";
 import StoreInitializer from "./providers/StoreInitializer";
 import { Metadata } from "next";
 import DynamicTitle from "./DynamicTitle";
+import { fetchWeatherData } from "@/services/fetchWeatherData";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const initialData = await searchWeather("Minsk");
-  const city = initialData.success && initialData.data.current.city;
-  if (!city) return { title: "Weather" };
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ city?: string }>;
+}): Promise<Metadata> {
+  const { city } = await searchParams;
+  const initialData = await fetchWeatherData(city);
+  const cityName = initialData.success ? initialData.validatedCity : "Minsk";
 
-  return { title: `Weather - ${city}` };
+  return { title: `Weather - ${cityName}` };
 }
 
-export default async function Home() {
-  const initialData = await searchWeather("Minsk");
-  const weatherData = initialData.success ? initialData.data : null;
+export default async function WeatherPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ city?: string }>;
+}) {
+  const { city } = await searchParams;
+  const targetCity = city?.trim() || "Minsk";
+  const weatherData = await fetchWeatherData(targetCity);
+
   return (
     <>
       <DynamicTitle />
       <Header />
-      {<StoreInitializer initialData={weatherData} city="Minsk" />}
+      {
+        <StoreInitializer
+          initialData={weatherData.success ? weatherData.data : null}
+          city={targetCity}
+        />
+      }
       <main className="min-h-screen min-w-62.5 px-4 py-8 md:px-6 lg:px-8 mx-auto">
         <SearchSection />
 

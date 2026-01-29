@@ -11,12 +11,11 @@ export default function StoreInitializer({
   city?: string;
 }) {
   const setWeatherData = useWeatherStore((state) => state.setWeatherData);
-  const weatherData = useWeatherStore((state) => state.weatherData);
+  const currentData = useWeatherStore((state) => state.weatherData);
 
   useEffect(() => {
-    if (!weatherData && initialData) {
-      setWeatherData(initialData, city);
-    }
-  }, [city, initialData, setWeatherData, weatherData]);
+    if (initialData && !currentData) setWeatherData(initialData, city);
+  }, [initialData, city, currentData, setWeatherData]);
+
   return null;
 }

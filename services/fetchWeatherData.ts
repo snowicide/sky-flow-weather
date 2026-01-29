@@ -1,30 +1,11 @@
-"use server";
-import {
+import type {
   WeatherDataCurrent,
   WeatherDataHourly,
   WeatherDataDaily,
 } from "@/types/WeatherData";
+import type { WeatherResponse } from "@/types/WeatherResponse";
 
-export type WeatherError = {
-  code: "GEOCODING_FAILED" | "FORECAST_FAILED" | "UNKNOWN_ERROR";
-  message: string;
-  details?: unknown;
-};
-export type WeatherResponse =
-  | {
-      success: true;
-      data: {
-        current: WeatherDataCurrent;
-        hourly: WeatherDataHourly;
-        daily: WeatherDataDaily;
-      };
-    }
-  | {
-      success: false;
-      error: WeatherError;
-    };
-
-export async function searchWeather(city: string): Promise<WeatherResponse> {
+export async function fetchWeatherData(city: string): Promise<WeatherResponse> {
   try {
     const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en`;
     const geoRes = await fetch(geoUrl);
@@ -96,6 +77,7 @@ export async function searchWeather(city: string): Promise<WeatherResponse> {
         hourly: forecastData.hourly as WeatherDataHourly,
         daily: forecastData.daily as WeatherDataDaily,
       },
+      validatedCity: geoData.results[0].name,
     };
   } catch (error) {
     console.error("Unknown error:", error);
