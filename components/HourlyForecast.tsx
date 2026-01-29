@@ -61,7 +61,7 @@ export default function HourlyForecast() {
                 </div>
                 <span className="font-medium">{hour}</span>
               </div>
-              <span className="text-xl font-bold">{temp}°</span>
+              <span className="text-xl font-bold">{temp.toFixed(1)}°</span>
             </div>
           ))}
         </div>

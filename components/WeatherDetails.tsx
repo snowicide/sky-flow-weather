@@ -14,7 +14,7 @@ export default function WeatherDetails() {
   const weatherDetails = [
     {
       title: "Feels Like",
-      value: `${data.apparent_temperature}°`,
+      value: `${data.apparent_temperature.toFixed(1)}°`,
     },
     {
       title: "Humidity",

@@ -67,7 +67,7 @@ export default function TodayWeather() {
             </div>
             <div className="font-bold flex gap-3">
               <span className="text-5xl sm:text-6xl md:text-8xl italic">
-                {data.temperature_2m}
+                {data.temperature_2m.toFixed(1)}
               </span>
               <span className="text-4xl sm:text-6xl">°</span>
             </div>
