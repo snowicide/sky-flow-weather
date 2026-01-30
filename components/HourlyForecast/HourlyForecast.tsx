@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
-import HourlyForecastSkeleton from "./skeletons/HourlyForecast.skeleton";
-import ChangeSelectedDay from "./ui/ChangeSelectedDay";
+import HourlyForecastSkeleton from "./HourlyForecast.skeleton";
+import ChangeSelectedDay from "./ChangeSelectedDay";
 import groupByDay from "@/utils/groupByDay";
 import { useSearchParams } from "next/navigation";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";

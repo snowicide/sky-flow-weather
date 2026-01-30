@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { formatDayOfWeek } from "@/utils/formatDay";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import DailyForecastSkeleton from "./skeletons/DailyForecast.skeleton";
+import DailyForecastSkeleton from "./DailyForecast.skeleton";
 import { useSearchParams } from "next/navigation";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 

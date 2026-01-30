@@ -1,5 +1,5 @@
 "use client";
-import WeatherDetailsSkeleton from "./skeletons/WeatherDetails.skeleton";
+import WeatherDetailsSkeleton from "./WeatherDetails.skeleton";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { useSearchParams } from "next/navigation";
 

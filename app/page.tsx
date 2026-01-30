@@ -1,9 +1,9 @@
 import Header from "@/components/Header";
-import SearchSection from "@/components/SearchSection";
-import TodayWeather from "@/components/TodayWeather";
-import WeatherDetails from "@/components/WeatherDetails";
-import DailyForecast from "@/components/DailyForecast";
-import HourlyForecast from "@/components/HourlyForecast";
+import { SearchSection } from "@/components/SearchSection";
+import { TodayWeather } from "@/components/TodayWeather";
+import { WeatherDetails } from "@/components/WeatherDetails";
+import { DailyForecast } from "@/components/DailyForecast";
+import { HourlyForecast } from "@/components/HourlyForecast";
 import { Metadata } from "next";
 import { fetchWeatherData } from "@/services/fetchWeatherData";
 

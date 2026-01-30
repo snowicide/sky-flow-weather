@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import TodayWeatherSkeleton from "./skeletons/TodayWeather.skeleton";
+import TodayWeatherSkeleton from "./TodayWeather.skeleton";
 import { useSearchParams } from "next/navigation";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 
