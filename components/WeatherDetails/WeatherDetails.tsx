@@ -1,14 +1,11 @@
 "use client";
-import { useWeatherQuery } from "@/hooks/useWeatherQuery";
-import { useSearchParams } from "next/navigation";
+import { WeatherDataCurrent } from "@/types/WeatherData";
 
-export default function WeatherDetails() {
-  const searchParams = useSearchParams();
-  const city = searchParams.get("city") || "Minsk";
-  const { data: result } = useWeatherQuery(city);
+export interface WeatherDetailsProps {
+  currentData: WeatherDataCurrent;
+}
 
-  const currentData = result?.data.current;
-
+export default function WeatherDetails({ currentData }: WeatherDetailsProps) {
   const weatherDetails = [
     {
       title: "Feels Like",

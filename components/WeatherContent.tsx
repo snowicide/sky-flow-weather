@@ -28,7 +28,7 @@ export default function WeatherContent({
       <div className="flex flex-col items-center lg:items-start justify-center lg:flex-row gap-8">
         <div className="flex-1 w-full xl:max-w-200">
           <TodayWeather currentData={current} />
-          <WeatherDetails />
+          <WeatherDetails currentData={current} />
           <DailyForecast />
         </div>
         <HourlyForecast />
