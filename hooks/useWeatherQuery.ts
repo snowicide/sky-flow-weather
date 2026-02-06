@@ -5,7 +5,7 @@ export function useWeatherQuery(city: string) {
   return useQuery({
     queryKey: ["weather", city],
     queryFn: async ({ signal }) => {
-      const timeoutSignal = AbortSignal.timeout(3000);
+      const timeoutSignal = AbortSignal.timeout(5000);
       const combinedSignal = AbortSignal.any([signal, timeoutSignal]);
       return fetchWeatherData(city, combinedSignal);
     },
