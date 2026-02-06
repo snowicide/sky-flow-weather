@@ -3,18 +3,15 @@ import Image from "next/image";
 import bgTodayMobile from "@/public/images/bg-today-small.svg";
 import bgTodayDesktop from "@/public/images/bg-today-large.svg";
 import dayjs from "dayjs";
-
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import { useSearchParams } from "next/navigation";
-import { useWeatherQuery } from "@/hooks/useWeatherQuery";
+import { WeatherDataCurrent } from "@/types/WeatherData";
 
-export default function TodayWeather() {
-  const searchParams = useSearchParams();
-  const city = searchParams.get("city") || "Minsk";
-  const { data: result } = useWeatherQuery(city);
+export interface TodayWeatherProps {
+  currentData: WeatherDataCurrent;
+}
 
-  const currentData = result?.data.current;
+export default function TodayWeather({ currentData }: TodayWeatherProps) {
   const code = getWeatherCode(currentData.weather_code);
   const icon = getIconByWeatherCode[code];
 

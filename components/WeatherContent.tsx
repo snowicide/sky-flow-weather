@@ -21,11 +21,13 @@ export default function WeatherContent({
   if (isError || !data.success)
     return <ErrorSection isError={isError} data={data} error={error} />;
 
+  const { current, daily, hourly } = data.data;
+
   return (
     <>
       <div className="flex flex-col items-center lg:items-start justify-center lg:flex-row gap-8">
         <div className="flex-1 w-full xl:max-w-200">
-          <TodayWeather />
+          <TodayWeather currentData={current} />
           <WeatherDetails />
           <DailyForecast />
         </div>
