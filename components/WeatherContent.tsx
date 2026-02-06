@@ -13,11 +13,10 @@ export default function WeatherContent({
   params: { city?: string };
 }) {
   const { data, isPending, isError, error } = useWeatherQuery(
-    params.city || "",
+    params.city || "Minsk",
   );
 
   if (isPending) return <WeatherContentSkeleton />;
-
   if (isError || !data.success)
     return <ErrorSection isError={isError} data={data} error={error} />;
 

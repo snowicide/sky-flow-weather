@@ -3,6 +3,7 @@ import { SearchSection } from "@/components/SearchSection";
 import { Metadata } from "next";
 import { fetchWeatherData } from "@/services/fetchWeatherData";
 import WeatherContent from "@/components/WeatherContent";
+import { redirect } from "next/navigation";
 
 interface WeatherPageProps {
   searchParams: Promise<{ city?: string }>;
@@ -10,6 +11,7 @@ interface WeatherPageProps {
 
 export default async function WeatherPage({ searchParams }: WeatherPageProps) {
   const params = await searchParams;
+  if (!params.city) redirect("/?city=Minsk");
 
   return (
     <>
