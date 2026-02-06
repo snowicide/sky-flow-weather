@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
-import HourlyForecastSkeleton from "./HourlyForecast.skeleton";
 import ChangeSelectedDay from "./ChangeSelectedDay";
 import groupByDay from "@/utils/groupByDay";
 import { useSearchParams } from "next/navigation";
@@ -13,16 +12,12 @@ export default function HourlyForecast() {
 
   const searchParams = useSearchParams();
   const city = searchParams.get("city") || "Minsk";
-  const { data: result, isPending, isError } = useWeatherQuery(city);
+  const { data: result } = useWeatherQuery(city);
 
   const days = useMemo(() => {
     if (!result?.success) return [];
     return groupByDay(result.data.hourly).slice(1);
   }, [result]);
-
-  if (isPending || isError || !result?.success) {
-    return <HourlyForecastSkeleton />;
-  }
 
   const selectedDay = days[selectedDayIndex] || {
     date: "",

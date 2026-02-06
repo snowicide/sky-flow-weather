@@ -1,29 +1,23 @@
 import Header from "@/components/Header";
 import { SearchSection } from "@/components/SearchSection";
-import { TodayWeather } from "@/components/TodayWeather";
-import { WeatherDetails } from "@/components/WeatherDetails";
-import { DailyForecast } from "@/components/DailyForecast";
-import { HourlyForecast } from "@/components/HourlyForecast";
 import { Metadata } from "next";
 import { fetchWeatherData } from "@/services/fetchWeatherData";
+import WeatherContent from "@/components/WeatherContent";
 
-export default async function WeatherPage() {
+interface WeatherPageProps {
+  searchParams: Promise<{ city?: string }>;
+}
+
+export default async function WeatherPage({ searchParams }: WeatherPageProps) {
+  const params = await searchParams;
+
   return (
     <>
       <Header />
 
       <main className="min-h-screen min-w-62.5 px-4 py-8 md:px-6 lg:px-8 mx-auto">
         <SearchSection />
-
-        <div className="flex flex-col items-center lg:items-start justify-center lg:flex-row gap-8">
-          <div className="flex-1 w-full xl:max-w-200">
-            <TodayWeather />
-            <WeatherDetails />
-            <DailyForecast />
-          </div>
-
-          <HourlyForecast />
-        </div>
+        <WeatherContent params={params} />
       </main>
     </>
   );

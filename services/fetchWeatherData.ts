@@ -15,14 +15,26 @@ export async function fetchWeatherData(
 
     if (!geoRes.ok) {
       signal?.throwIfAborted();
-      throw new Error("GEOCODING_FAILED");
+      return {
+        success: false,
+        error: {
+          code: "GEOCODING_FAILED",
+          message: `City ${city} not found...`,
+        },
+      };
     }
 
     const geoData = await geoRes.json();
 
     signal?.throwIfAborted();
     if (!geoData.results || geoData.results.length === 0) {
-      throw new Error("GEOCODING_FAILED");
+      return {
+        success: false,
+        error: {
+          code: "GEOCODING_FAILED",
+          message: `City ${city} not found...`,
+        },
+      };
     }
 
     const { latitude, longitude, timezone } = geoData.results[0];

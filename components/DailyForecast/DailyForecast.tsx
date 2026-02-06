@@ -3,18 +3,13 @@ import Image from "next/image";
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { formatDayOfWeek } from "@/utils/formatDay";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import DailyForecastSkeleton from "./DailyForecast.skeleton";
 import { useSearchParams } from "next/navigation";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 
 export default function DailyForecast() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") || "Minsk";
-  const { data: result, isPending, isError } = useWeatherQuery(city);
-
-  if (isPending || isError || !result?.success) {
-    return <DailyForecastSkeleton />;
-  }
+  const { data: result } = useWeatherQuery(city);
 
   const dailyData = result.data.daily;
 

@@ -1,5 +1,5 @@
 import { fetchWeatherData } from "@/services/fetchWeatherData";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export function useWeatherQuery(city: string) {
   return useQuery({
@@ -25,7 +25,6 @@ export function useWeatherQuery(city: string) {
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 10000),
 
     refetchOnWindowFocus: false,
-    placeholderData: keepPreviousData,
 
     staleTime: 0,
   });

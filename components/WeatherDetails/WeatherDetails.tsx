@@ -1,18 +1,13 @@
 "use client";
-import WeatherDetailsSkeleton from "./WeatherDetails.skeleton";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { useSearchParams } from "next/navigation";
 
 export default function WeatherDetails() {
   const searchParams = useSearchParams();
   const city = searchParams.get("city") || "Minsk";
-  const { data: result, isPending, isError } = useWeatherQuery(city);
+  const { data: result } = useWeatherQuery(city);
 
-  if (isPending || isError || !result?.success) {
-    return <WeatherDetailsSkeleton />;
-  }
-
-  const currentData = result.data.current;
+  const currentData = result?.data.current;
 
   const weatherDetails = [
     {
