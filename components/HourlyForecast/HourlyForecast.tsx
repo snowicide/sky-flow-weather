@@ -40,7 +40,7 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
         </div>
 
         <ul
-          className="space-y-2.5 overflow-auto max-h-136 scrollbar-hide"
+          className="space-y-2.5 overflow-auto max-h-136 px-1 custom-scrollbar"
           ref={hoursRef}
         >
           {hours.map(({ hour, image, temp }, index) => (
@@ -49,13 +49,11 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
               className="flex items-center justify-between bg-[hsl(243,23%,24%)] hover:opacity-75 p-3 rounded-lg border border-white/10"
             >
               <div className="flex items-center gap-3">
-                <div className="relative w-8 h-8">
-                  <Image
-                    src={image}
-                    alt={`${hour} weather`}
-                    className="object-contain"
-                  />
-                </div>
+                <Image
+                  src={image}
+                  alt={`${hour} weather`}
+                  className="object-contain relative w-8 h-8"
+                />
                 <span className="font-medium">{hour}</span>
               </div>
               <span className="text-xl font-bold">{temp.toFixed(1)}°</span>
