@@ -31,11 +31,11 @@ export default function DailyForecast({ dailyData }: DailyForecastProps) {
   });
 
   return (
-    <div className="mb-10">
+    <section aria-label="Daily Forecast" className="mb-10">
       <h3 className="text-xl sm:text-2xl font-bold mb-5">Daily forecast</h3>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
+      <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
         {DailyForecast.map(({ day, image, temp, feelsLike }) => (
-          <div
+          <li
             key={day}
             className="bg-[hsl(243,27%,20%)] hover:opacity-75 transition duration-75 p-4 rounded-xl border border-white/10 flex flex-col items-center"
           >
@@ -51,9 +51,9 @@ export default function DailyForecast({ dailyData }: DailyForecastProps) {
               <span className="font-bold">{temp}</span>
               <span className="text-white/70">{feelsLike}</span>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

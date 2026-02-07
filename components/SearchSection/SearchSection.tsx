@@ -6,7 +6,7 @@ export default function SearchSection() {
   const { searchSelectedCity } = useSearchActions();
 
   return (
-    <div className="mb-10">
+    <section className="mb-10">
       <h1 className="text-5xl max-w-80 sm:max-w-full leading-tight justify-self-center sm:text-4xl md:text-5xl font-bold text-center mb-8 sm:mb-15">
         How&apos;s the sky looking today?
       </h1>
@@ -20,6 +20,6 @@ export default function SearchSection() {
           Search
         </button>
       </div>
-    </div>
+    </section>
   );
 }

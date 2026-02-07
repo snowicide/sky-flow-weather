@@ -32,14 +32,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { city } = await searchParams;
-    if (!city) return { title: "Weather" };
+    if (!city) return { title: "SkyFlow" };
     const initialData = await fetchWeatherData(city);
     const cityName = initialData.success
       ? initialData.validatedCity
       : "Not found";
 
-    return { title: `Weather - ${cityName}` };
+    return { title: `SkyFlow - ${cityName}` };
   } catch {
-    return { title: "Weather" };
+    return { title: "SkyFlow" };
   }
 }

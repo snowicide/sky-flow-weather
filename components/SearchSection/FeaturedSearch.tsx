@@ -11,7 +11,7 @@ export function FeaturedSearch({ data, inputRef }: FeaturedTabProps) {
   const country = data.country.charAt(0).toUpperCase() + data.country.slice(1);
 
   return (
-    <div className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
+    <li className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
       <div
         onClick={() => searchSelectedCity(city, inputRef)}
         className="flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer font-normal text-sm sm:text-base md:text-lg"
@@ -28,6 +28,6 @@ export function FeaturedSearch({ data, inputRef }: FeaturedTabProps) {
           className="w-5 h-5 sm:w-6 sm:h-6 focus:outline-none hover:text-[hsl(233,100%,70%)] transition duration-100 cursor-pointer"
         />
       </div>
-    </div>
+    </li>
   );
 }

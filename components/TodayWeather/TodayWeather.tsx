@@ -12,7 +12,10 @@ export default function TodayWeather({ currentData }: TodayWeatherProps) {
   const icon = getIconByWeatherCode[code];
 
   return (
-    <div className="relative rounded-2xl py-8 overflow-hidden mb-8">
+    <section
+      aria-label="Current Weather"
+      className="relative rounded-2xl py-8 overflow-hidden mb-8"
+    >
       <div className="absolute inset-0 -z-100 w-full h-full">
         <Image
           src={bgTodayMobile}
@@ -55,6 +58,6 @@ export default function TodayWeather({ currentData }: TodayWeatherProps) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

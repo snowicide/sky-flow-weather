@@ -22,7 +22,7 @@ export function RecentSearch({ data, inputRef }: RecentTabProps) {
   };
 
   return (
-    <div className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
+    <li className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
       <div
         onClick={() => searchSelectedCity(city, inputRef)}
         className="font-normal text-sm sm:text-base md:text-lg flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer"
@@ -41,6 +41,6 @@ export function RecentSearch({ data, inputRef }: RecentTabProps) {
           <XIcon className="w-5.5 h-5.5 sm:w-6 sm:h-6 hover:text-red-400 cursor-pointer" />
         </div>
       </div>
-    </div>
+    </li>
   );
 }

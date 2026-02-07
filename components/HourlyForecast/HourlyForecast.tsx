@@ -7,7 +7,7 @@ import type { HourlyForecastProps } from "./HourlyForecast.types";
 
 export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
-  const hoursRef = useRef<HTMLDivElement>(null);
+  const hoursRef = useRef<HTMLUListElement>(null);
 
   const days = useMemo(() => {
     return groupByDay(hourlyData).slice(1);
@@ -26,7 +26,10 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
   };
 
   return (
-    <div className="lg:w-96 w-full max-h-full md:max-w-full">
+    <section
+      aria-label="Hourly Forecast"
+      className="lg:w-96 w-full max-h-full md:max-w-full"
+    >
       <div className="bg-[hsl(243,27%,20%)] max-h-full p-5 sm:p-6 rounded-2xl border border-white/10 sticky top-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold">Hourly forecast</h3>
@@ -36,12 +39,12 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
           />
         </div>
 
-        <div
+        <ul
           className="space-y-2.5 overflow-auto max-h-136 scrollbar-hide"
           ref={hoursRef}
         >
           {hours.map(({ hour, image, temp }, index) => (
-            <div
+            <li
               key={`${hour}-${index}`}
               className="flex items-center justify-between bg-[hsl(243,23%,24%)] hover:opacity-75 p-3 rounded-lg border border-white/10"
             >
@@ -56,10 +59,10 @@ export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
                 <span className="font-medium">{hour}</span>
               </div>
               <span className="text-xl font-bold">{temp.toFixed(1)}°</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }
