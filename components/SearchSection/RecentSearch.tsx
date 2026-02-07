@@ -17,24 +17,17 @@ export function RecentSearch({ data, inputRef }: RecentTabProps) {
     data.country.charAt(0).toUpperCase() + data.country.slice(1).toLowerCase();
 
   const handleFeaturedIcon = () => {
-    toggleFavorite(data.id, isFeatured);
+    toggleFavorite(data.id);
     setIsFeatured((prev) => !prev);
-  };
-
-  const handleSearch = () => {
-    if (inputRef?.current) inputRef?.current.blur();
-    searchSelectedCity(city);
   };
 
   return (
     <div className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
       <div
-        onClick={handleSearch}
-        className="flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer"
+        onClick={() => searchSelectedCity(city, inputRef)}
+        className="font-normal text-sm sm:text-base md:text-lg flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer"
       >
-        <span className="font-normal text-sm sm:text-base md:text-lg">
-          {`${city}, ${country}`}
-        </span>
+        {`${city}, ${country}`}
       </div>
 
       <div className="flex items-center gap-1 sm:gap-3 opacity-70">

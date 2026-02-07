@@ -43,10 +43,10 @@ export function useSearchHistory() {
   }, []);
 
   const toggleFavorite = useCallback(
-    (id: string, isFeatured: boolean) =>
+    (id: string) =>
       setRecent((prev) =>
         prev.map((item) =>
-          item.id === id ? { ...item, isFavorite: !isFeatured } : item,
+          item.id === id ? { ...item, isFavorite: !item.isFavorite } : item,
         ),
       ),
     [],

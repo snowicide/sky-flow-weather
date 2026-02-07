@@ -25,32 +25,60 @@ export function useSearchActions() {
     setCurrentTab(value);
   };
 
-  const searchSelectedCity = async (city?: string) => {
+  const searchSelectedCity = async (
+    city?: string,
+    inputRef?: React.RefObject<HTMLInputElement | null>,
+  ) => {
     // if not clicked recent - using input value
-    if (!city) city = inputValue.trim();
-    if (!city.trim() || city.length <= 1) return;
+    const targetCity = city || inputValue.trim();
+    if (!targetCity || targetCity.length <= 1) return;
+
+    inputRef?.current?.blur();
     setIsOpen(false);
     setInputValue("");
+
     // get country
     const geoRes = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`,
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(targetCity)}&count=1`,
     );
 
     if (geoRes.ok) {
       const geoData = await geoRes.json();
       if (geoData.results?.[0]) {
         const country = geoData.results[0].country || "Unknown";
-        addCity(city, country);
+        addCity(targetCity, country);
       }
     }
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("city", city);
+    params.set("city", targetCity);
     router.push(`${pathname}?${params.toString().toLowerCase()}`);
+  };
+
+  const handleKeydown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    inputRef: React.RefObject<HTMLInputElement | null>,
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchSelectedCity(undefined, inputRef);
+    }
+
+    if (e.key === "Escape") {
+      setIsOpen(false);
+      if (inputRef.current) inputRef.current.blur();
+    }
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    setIsOpen(true);
   };
 
   return {
     handleChangeTab,
     searchSelectedCity,
+    handleKeydown,
+    handleChangeInput,
   };
 }

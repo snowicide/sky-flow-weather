@@ -10,20 +10,13 @@ export function FeaturedSearch({ data, inputRef }: FeaturedTabProps) {
   const city = data.city.charAt(0).toUpperCase() + data.city.slice(1);
   const country = data.country.charAt(0).toUpperCase() + data.country.slice(1);
 
-  const handleSearch = () => {
-    if (inputRef?.current) inputRef?.current.blur();
-    searchSelectedCity(city);
-  };
-
   return (
     <div className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
       <div
-        onClick={handleSearch}
-        className="flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer"
+        onClick={() => searchSelectedCity(city, inputRef)}
+        className="flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer font-normal text-sm sm:text-base md:text-lg"
       >
-        <span className="font-normal text-sm sm:text-base md:text-lg">
-          {`${city}, ${country}`}
-        </span>
+        {`${city}, ${country}`}
       </div>
 
       <div
