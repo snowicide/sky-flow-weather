@@ -7,17 +7,12 @@ export interface SearchDropdownProps {
 
 export interface RecentTabProps {
   data: HistoryItem;
-
-  searchSelectedCity: (value: string) => void;
-  toggleFavorite: (id: string, isFeatured: boolean) => void;
-  removeCity: (id: string) => void;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 export interface FeaturedTabProps {
   data: HistoryItem;
-
-  searchSelectedCity: (value: string) => void;
-  removeFavorite: (id: string) => void;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 export type ActiveTab = "recent" | "featured";

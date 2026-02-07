@@ -1,14 +1,16 @@
 import { FeaturedIcon, XIcon } from "@/components/icons";
 import { useState } from "react";
 import type { RecentTabProps } from "./SearchField.types";
+import { useSearchActions } from "@/hooks/useSearchActions";
+import { useSearchHistory } from "@/hooks/useSearchHistory";
 
-export function RecentSearch({
-  data,
-  searchSelectedCity,
-  toggleFavorite,
-  removeCity,
-}: RecentTabProps) {
+export function RecentSearch({ data, inputRef }: RecentTabProps) {
   const [isFeatured, setIsFeatured] = useState<boolean>(false);
+
+  const { searchSelectedCity } = useSearchActions();
+
+  const { toggleFavorite, removeCity } = useSearchHistory();
+
   const city =
     data.city.charAt(0).toUpperCase() + data.city.slice(1).toLocaleLowerCase();
   const country =
@@ -19,10 +21,15 @@ export function RecentSearch({
     setIsFeatured((prev) => !prev);
   };
 
+  const handleSearch = () => {
+    if (inputRef?.current) inputRef?.current.blur();
+    searchSelectedCity(city);
+  };
+
   return (
     <div className="flex justify-between font-medium mx-2 px-5 py-3 my-3 text-white hover:bg-[hsl(243,23%,30%)] rounded-xl">
       <div
-        onClick={() => searchSelectedCity(city)}
+        onClick={handleSearch}
         className="flex flex-1 items-center gap-1 sm:gap-2 cursor-pointer"
       >
         <span className="font-normal text-sm sm:text-base md:text-lg">

@@ -1,33 +1,16 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { SearchField } from "./SearchField";
-import { useSearchHistoryStore } from "@/stores/useSearchStore";
-import { useShallow } from "zustand/shallow";
+import { useSearchActions } from "@/hooks/useSearchActions";
 
 export default function SearchSection() {
-  const { inputValue, setInputValue } = useSearchHistoryStore(
-    useShallow((state) => ({
-      inputValue: state.inputValue,
-      setInputValue: state.setInputValue,
-    })),
-  );
-  const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const cityFromUrl = searchParams.get("city") || "minsk";
   const { isError } = useWeatherQuery(cityFromUrl);
 
-  const handleSearch = () => {
-    const city = inputValue.trim();
-    if (!city) return;
-
-    const params = new URLSearchParams();
-    params.set("city", city);
-    router.push(`${pathname}?${params.toString().toLowerCase()}`);
-    setInputValue("");
-  };
+  const { searchSelectedCity } = useSearchActions();
 
   return (
     <div className="mb-10">
@@ -39,10 +22,10 @@ export default function SearchSection() {
         <div
           className={`flex items-center flex-1 group bg-[hsl(243,27%,20%)] hover:bg-[hsl(243,27%,20%)]/80 focus-within:bg-[hsl(243,27%,20%)]/80 focus-within:ring-2 focus-within:ring-[hsl(233,67%,56%)] transition duration-75 rounded-xl px-4 py-3 ${isError ? "ring-1 ring-red-500/50" : ""}`}
         >
-          <SearchField inputValue={inputValue} setInputValue={setInputValue} />
+          <SearchField />
         </div>
         <button
-          onClick={handleSearch}
+          onClick={() => searchSelectedCity()}
           className="bg-[hsl(233,67%,56%)] text-white font-medium py-3 px-6 rounded-xl text-base sm:text-lg whitespace-nowrap hover:opacity-90 transition-opacity"
         >
           Search

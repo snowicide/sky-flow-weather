@@ -1,89 +1,55 @@
 import Image from "next/image";
 import searchIcon from "@/public/icons/icon-search.svg";
-import { useRef } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import { FeaturedIcon, HistoryIcon } from "@/components/icons";
 import { RecentSearch } from "./RecentSearch";
 import { FeaturedSearch } from "./FeaturedSearch";
-import { useSearchHistory } from "@/hooks/useSearchHistory";
-import { useSearchHistoryStore } from "@/stores/useSearchStore";
+import { useSearchStore } from "@/stores/useSearchStore";
 import { useShallow } from "zustand/shallow";
+import { useSearchActions } from "@/hooks/useSearchActions";
+import { useRef } from "react";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
-import type { ActiveTab, SearchDropdownProps } from "./SearchField.types";
+import { useSearchParams } from "next/navigation";
+import { useSearchHistory } from "@/hooks/useSearchHistory";
 
-export function SearchField({
-  inputValue,
-  setInputValue,
-}: SearchDropdownProps) {
-  const { currentTab, setCurrentTab, isOpen, setIsOpen } =
-    useSearchHistoryStore(
+export function SearchField() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const searchParams = useSearchParams();
+  const cityFromUrl = searchParams.get("city") || "minsk";
+  const { error } = useWeatherQuery(cityFromUrl);
+
+  const { inputValue, setInputValue, isOpen, setIsOpen, currentTab } =
+    useSearchStore(
       useShallow((state) => ({
-        currentTab: state.currentTab,
-        setCurrentTab: state.setCurrentTab,
-        isOpen: state.isOpen,
+        inputValue: state.inputValue,
+        setInputValue: state.setInputValue,
         setIsOpen: state.setIsOpen,
+        isOpen: state.isOpen,
+        currentTab: state.currentTab,
       })),
     );
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { searchSelectedCity, handleChangeTab } = useSearchActions();
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const cityFromUrl = searchParams.get("city") || "minsk";
-
-  const { error } = useWeatherQuery(cityFromUrl);
-
-  const {
-    recent,
-    favorites,
-    addCity,
-    toggleFavorite,
-    removeCity,
-    removeFavorite,
-  } = useSearchHistory();
-
-  const handleChangeTab = (value: ActiveTab) => {
-    setCurrentTab(value);
-  };
-
-  const searchSelectedCity = async (city: string) => {
-    if (!city) return;
-    if (inputRef.current) inputRef.current.blur();
-    setIsOpen(false);
-    setInputValue("");
-
-    // get country
-    const geoRes = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`,
-    );
-
-    if (geoRes.ok) {
-      const geoData = await geoRes.json();
-      if (geoData.results?.[0]) {
-        const country = geoData.results[0].country || "Unknown";
-        addCity(city, country);
-      }
-    }
-
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("city", city);
-    router.push(`${pathname}?${params.toString().toLowerCase()}`);
-  };
+  const { recent, favorites } = useSearchHistory();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const city = inputValue.trim();
-      if (city) {
-        searchSelectedCity(city);
-      }
+      if (inputRef.current) inputRef.current.blur();
+      searchSelectedCity();
     }
 
     if (e.key === "Escape") {
       setIsOpen(false);
       if (inputRef.current) inputRef.current.blur();
     }
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    setIsOpen(true);
   };
 
   return (
@@ -94,25 +60,17 @@ export function SearchField({
           src={searchIcon}
           className="w-5 h-5 mr-3 cursor-pointer shrink-0"
           alt="Search"
-          onClick={() => {
-            const city = inputValue.trim();
-            if (city) {
-              searchSelectedCity(city);
-            }
-          }}
+          onClick={() => searchSelectedCity()}
         />
         <input
           ref={inputRef}
           aria-label="Search"
           className="flex-1 min-w-0 bg-transparent placeholder-white/70 text-base sm:text-lg outline-none"
           onKeyDown={handleKeyDown}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            setIsOpen(true);
-          }}
+          onChange={handleChangeInput}
+          value={inputValue}
           onFocus={() => setIsOpen(true)}
           onBlur={() => setIsOpen(false)}
-          value={inputValue}
           placeholder={
             error?.message === "GEOCODING_FAILED"
               ? "City not found..."
@@ -171,9 +129,7 @@ export function SearchField({
                 <RecentSearch
                   key={`${data.city}-${index}`}
                   data={data}
-                  searchSelectedCity={searchSelectedCity}
-                  toggleFavorite={toggleFavorite}
-                  removeCity={removeCity}
+                  inputRef={inputRef}
                 />
               ))}
 
@@ -182,8 +138,7 @@ export function SearchField({
                 <FeaturedSearch
                   key={`${data.city}-${index}`}
                   data={data}
-                  removeFavorite={removeFavorite}
-                  searchSelectedCity={searchSelectedCity}
+                  inputRef={inputRef}
                 />
               ))}
           </div>

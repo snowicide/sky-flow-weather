@@ -2,7 +2,7 @@ import { ActiveTab } from "@/components/SearchSection/SearchField.types";
 import type { HistoryItem } from "@/components/SearchSection/SearchHistory.types";
 import { create } from "zustand";
 
-export interface SearchHistoryStore {
+export interface SearchStore {
   recent: HistoryItem[];
   favorites: HistoryItem[];
   inputValue: string;
@@ -16,7 +16,7 @@ export interface SearchHistoryStore {
   setIsOpen: (value: boolean) => void;
 }
 
-export const useSearchHistoryStore = create<SearchHistoryStore>((set) => ({
+export const useSearchStore = create<SearchStore>((set) => ({
   recent: [],
   favorites: [],
   inputValue: "",
