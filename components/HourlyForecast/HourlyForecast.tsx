@@ -3,11 +3,7 @@ import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import ChangeSelectedDay from "./ChangeSelectedDay";
 import groupByDay from "@/utils/groupByDay";
-import { WeatherDataHourly } from "@/types/WeatherData";
-
-export interface HourlyForecastProps {
-  hourlyData: WeatherDataHourly;
-}
+import type { HourlyForecastProps } from "./HourlyForecast.types";
 
 export default function HourlyForecast({ hourlyData }: HourlyForecastProps) {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);

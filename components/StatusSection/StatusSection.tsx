@@ -1,18 +1,12 @@
 import Image from "next/image";
 import retryIcon from "@/public/icons/icon-retry.svg";
-import { WeatherResponse } from "@/types/WeatherResponse";
+import type { StatusSectionProps } from "./StatusSection.types";
 
-interface ErrorSectionProps {
-  isError: boolean;
-  error: Error | null;
-  data: WeatherResponse | undefined;
-}
-
-export default function ErrorSection({
+export default function StatusSection({
   isError,
   error,
   data,
-}: ErrorSectionProps) {
+}: StatusSectionProps) {
   const getErrorMessage = () => {
     if (isError) {
       if (error?.message === "FORECAST_FAILED")

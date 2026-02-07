@@ -1,6 +1,6 @@
 import { FeaturedIcon, XIcon } from "@/components/icons";
-import { RecentTabProps } from "@/types/SearchDropdown";
 import { useState } from "react";
+import type { RecentTabProps } from "./SearchDropdown.types";
 
 export default function RecentSearch({
   data,

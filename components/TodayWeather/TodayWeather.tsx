@@ -5,11 +5,7 @@ import bgTodayDesktop from "@/public/images/bg-today-large.webp";
 import dayjs from "dayjs";
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import { WeatherDataCurrent } from "@/types/WeatherData";
-
-export interface TodayWeatherProps {
-  currentData: WeatherDataCurrent;
-}
+import type { TodayWeatherProps } from "./TodayWeather.types";
 
 export default function TodayWeather({ currentData }: TodayWeatherProps) {
   const code = getWeatherCode(currentData.weather_code);

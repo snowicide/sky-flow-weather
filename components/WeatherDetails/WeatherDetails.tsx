@@ -1,9 +1,6 @@
 "use client";
-import { WeatherDataCurrent } from "@/types/WeatherData";
 
-export interface WeatherDetailsProps {
-  currentData: WeatherDataCurrent;
-}
+import type { WeatherDetailsProps } from "./WeatherDetails.types";
 
 export default function WeatherDetails({ currentData }: WeatherDetailsProps) {
   const weatherDetails = [

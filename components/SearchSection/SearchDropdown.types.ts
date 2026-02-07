@@ -1,4 +1,4 @@
-import { HistoryItem } from "./SearchHistory";
+import type { HistoryItem } from "./SearchHistory.types";
 
 export interface SearchDropdownProps {
   inputValue: string;

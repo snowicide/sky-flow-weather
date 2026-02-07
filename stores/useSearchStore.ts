@@ -1,5 +1,5 @@
-import { ActiveTab } from "@/types/SearchDropdown";
-import { HistoryItem } from "@/types/SearchHistory";
+import type { ActiveTab } from "@/components/SearchSection/SearchDropdown.types";
+import type { HistoryItem } from "@/components/SearchSection/SearchHistory.types";
 import { create } from "zustand";
 
 export interface SearchHistoryStore {

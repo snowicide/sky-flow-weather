@@ -2,8 +2,8 @@ import type {
   WeatherDataCurrent,
   WeatherDataHourly,
   WeatherDataDaily,
-} from "@/types/WeatherData";
-import type { WeatherResponse } from "@/types/WeatherResponse";
+} from "@/types/api/WeatherData";
+import type { WeatherResponse } from "@/types/api/WeatherResponse";
 
 export async function fetchWeatherData(
   city: string,

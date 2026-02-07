@@ -1,4 +1,4 @@
-import type { DailyForecast } from "./WeatherHourly";
+import type { DailyForecast } from "../../types/api/WeatherHourly";
 
 export interface ChangeSelectedDayProps {
   days: DailyForecast[];

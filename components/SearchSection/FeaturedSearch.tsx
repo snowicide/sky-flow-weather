@@ -1,5 +1,5 @@
 import { FeaturedIcon } from "@/components/icons";
-import { FeaturedTabProps } from "@/types/SearchDropdown";
+import type { FeaturedTabProps } from "./SearchDropdown.types";
 
 export default function FeaturedSearch({
   data,

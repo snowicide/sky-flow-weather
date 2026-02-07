@@ -1,4 +1,4 @@
-import { ActiveTab } from "@/types/SearchDropdown";
+import type { ActiveTab } from "../SearchSection/SearchDropdown.types";
 
 export default function FeaturedIcon({
   className,

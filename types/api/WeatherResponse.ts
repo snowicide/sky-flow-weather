@@ -2,7 +2,7 @@ import {
   WeatherDataCurrent,
   WeatherDataHourly,
   WeatherDataDaily,
-} from "@/types/WeatherData";
+} from "@/types/api/WeatherData";
 
 export type WeatherError = {
   code: "GEOCODING_FAILED" | "FORECAST_FAILED" | "UNKNOWN_ERROR";

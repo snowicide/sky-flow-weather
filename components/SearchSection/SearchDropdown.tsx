@@ -2,7 +2,6 @@ import Image from "next/image";
 import searchIcon from "@/public/icons/icon-search.svg";
 import { useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { ActiveTab, SearchDropdownProps } from "@/types/SearchDropdown";
 import { FeaturedIcon, HistoryIcon } from "@/components/icons";
 import RecentSearch from "./RecentSearch";
 import FeaturedSearch from "./FeaturedSearch";
@@ -10,6 +9,7 @@ import { useSearchHistory } from "@/hooks/useSearchHistory";
 import { useSearchHistoryStore } from "@/stores/useSearchStore";
 import { useShallow } from "zustand/shallow";
 import { useWeatherQuery } from "@/hooks/useWeatherQuery";
+import type { ActiveTab, SearchDropdownProps } from "./SearchDropdown.types";
 
 export default function SearchDropdown({
   inputValue,

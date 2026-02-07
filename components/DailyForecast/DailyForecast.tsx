@@ -3,11 +3,7 @@ import Image from "next/image";
 import { getWeatherCode } from "@/utils/weatherCodes";
 import { formatDayOfWeek } from "@/utils/formatDay";
 import { getIconByWeatherCode } from "@/utils/getIconByWeatherCode";
-import { WeatherDataDaily } from "@/types/WeatherData";
-
-export interface DailyForecastProps {
-  dailyData: WeatherDataDaily;
-}
+import type { DailyForecastProps } from "./DailyForecastProps.types";
 
 export default function DailyForecast({ dailyData }: DailyForecastProps) {
   const calculateAverageTemps = (min: number, max: number) => {

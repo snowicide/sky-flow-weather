@@ -1,6 +1,6 @@
 import { startTransition, useCallback, useEffect, useState } from "react";
-import type { HistoryItem } from "@/types/SearchHistory";
 import { useSearchParams } from "next/navigation";
+import type { HistoryItem } from "@/components/SearchSection/SearchHistory.types";
 
 export function useSearchHistory() {
   const [recent, setRecent] = useState<HistoryItem[]>([]);

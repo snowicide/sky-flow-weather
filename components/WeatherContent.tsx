@@ -4,8 +4,8 @@ import { DailyForecast } from "./DailyForecast";
 import { TodayWeather } from "./TodayWeather";
 import { WeatherDetails } from "./WeatherDetails";
 import { HourlyForecast } from "./HourlyForecast";
-import WeatherContentSkeleton from "./WeatherSkeleton/WeatherContent.skeleton";
-import ErrorSection from "./ErrorSection";
+import { StatusSection } from "./StatusSection";
+import { WeatherContentSkeleton } from "./WeatherSkeleton";
 
 export default function WeatherContent({
   params,
@@ -18,7 +18,7 @@ export default function WeatherContent({
 
   if (isPending) return <WeatherContentSkeleton />;
   if (isError || !data.success)
-    return <ErrorSection isError={isError} data={data} error={error} />;
+    return <StatusSection isError={isError} data={data} error={error} />;
 
   const { current, daily, hourly } = data.data;
 

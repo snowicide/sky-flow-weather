@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import Image from "next/image";
 import dropdownIcon from "@/public/icons/icon-dropdown.svg";
-import { ChangeSelectedDayProps } from "@/types/ChangeSelectedDayProps";
+import type { ChangeSelectedDayProps } from "@/components/HourlyForecast/ChangeSelectedDay.types";
 
 export default function ChangeSelectedDay({
   days,
